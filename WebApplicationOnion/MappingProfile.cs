@@ -9,9 +9,9 @@ namespace WebApplicationOnion
         public MappingProfile()
         {
             CreateMap<Employee, EmployeeDto>();
-            CreateMap<Company, CompanyForCreacionDto>();
-            CreateMap<CompanyForCreacionDto, CompanyDto>();
-            CreateMap<CompanyForCreacionDto, Company>();
+            CreateMap<Company, CompanyForCreationDto>();
+            CreateMap<CompanyForCreationDto, CompanyDto>();
+            CreateMap<CompanyForCreationDto, Company>();
             CreateMap<Company, CompanyDto>();
             CreateMap<IEnumerable<CompanyDto>, IEnumerable<Company>>();
 

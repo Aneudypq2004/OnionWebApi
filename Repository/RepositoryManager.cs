@@ -22,6 +22,7 @@ namespace Repository
         public ICompanyRepository CompanyRepository => companyRepository.Value;
         public ICompanyRepository Employee => companyRepository.Value;
 
+
         public async Task Save()
         {
             await repositoryContext.SaveChangesAsync();

@@ -17,17 +17,14 @@ namespace Service
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
         public EmployeeService(IRepositoryManager repository, IMapper mapper)
-        { 
+        {
             this._repository = repository;
             this._mapper = mapper;
-            
-        }
-        public EmployeeDto CreateEmployee(EmployeeForCreationDto employee)
-        {
-            throw new NotImplementedException();
-        }
 
-        public bool DeleteEmployee(Guid Id)
+        }
+       
+
+        public Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges)
         {
             throw new NotImplementedException();
         }
@@ -37,12 +34,22 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public (EmployeeForUpdateDto employeeToPatch, Employee employeeEntity) GetEmployeeForPatch(Guid companyId, Guid id, bool compTrackChanges, bool empTrackChanges)
+        public EmployeeDto CreateEmployee(EmployeeForCreationDto employee)
         {
-            return (null, null);
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<EmployeeDto> GetEmployees(bool trackChanges)
+        public EmployeeDto UpdateEmployee(Guid Id, EmployeeDto employee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteEmployee(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public (EmployeeForUpdateDto employeeToPatch, Employee employeeEntity) GetEmployeeForPatch(Guid companyId, Guid id, bool compTrackChanges, bool empTrackChanges)
         {
             throw new NotImplementedException();
         }
@@ -52,9 +59,22 @@ namespace Service
             throw new NotImplementedException();
         }
 
-        public EmployeeDto UpdateEmployee(Guid Id, EmployeeDto employee)
+
+        // HELP
+
+        private async Task<Employee> GetEmployeeForCompanyAndCheckIfItExists(Guid companyId, Guid id, bool trackChanges)
         {
-            throw new NotImplementedException();
+            var employeeDb = await _repository.Employee.GetEmployeeAsync(companyId, id, trackChanges);
+
+            return employeeDb is null ? throw new EmployeeNotFoundException(id.ToString()) : employeeDb;
+        }
+
+
+        private async Task CheckIfCompanyExists(Guid companyId, bool trackChanges)
+        {
+            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, trackChanges);
+
+            if (company is null) throw new CompanyNotFoundException(companyId);
         }
     }
 }

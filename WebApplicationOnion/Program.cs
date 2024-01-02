@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Repository;
 using Service;
 using Service.Contracts;
+using WebApplicationOnion.ActionFilters;
 using WebApplicationOnion.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.ConfigureSqlService(builder.Configuration);
 builder.Services.ConfigureRepositoryService();
 builder.Services.ConfigureServiceManager();
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 
 

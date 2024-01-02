@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,17 @@ namespace Repository
 
         public void UpdateCompany(Company entity) => Update(entity);
 
-        public IEnumerable<Company> GetAllCompanies(bool tranckChanges) => FindAll(tranckChanges);
+        public async Task<IEnumerable<Company>> GetAllCompanies(bool tranckChanges) => await FindAll(tranckChanges).ToListAsync();
+
+
+        public async Task<Company> GetCompanyAsync(Guid Id, bool tranckChanges) => await FindByCondition(c => c.Id.Equals(Id), tranckChanges).SingleOrDefaultAsync();
+
         
 
-        public IEnumerable<Company> GetCompany(Guid Id, bool tranckChanges) => FindByCondition(c => c.Id.Equals(Id), tranckChanges);
-      
+        public async Task<IEnumerable<Company>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges)
+        {
+          return  await FindByCondition(c => ids.Contains(c.Id), trackChanges).ToListAsync();
+        }
 
        
     }
