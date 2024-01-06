@@ -7,5 +7,14 @@ namespace WebApplicationOnion.Controllers
     [ApiController]
     public class RootController : ControllerBase
     {
+        private readonly LinkGenerator _linkGenerator;
+        public RootController(LinkGenerator linkGenerator) => _linkGenerator = linkGenerator;
+
+        []
+
+
+
+
+    
     }
 }
