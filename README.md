@@ -3,6 +3,8 @@
 * Entity Framework
 * Automapper
 * Dtos
+* Model validation
+* Lazy load
 * Onion Arquitecture
 * Hateoas
 * Cache
