@@ -10,4 +10,6 @@
 * Extensions Method
 * Handle global exceptions  ```App.UseExceptionHandler```
 * JWT
+* Filter results
+* dependency injection
   
