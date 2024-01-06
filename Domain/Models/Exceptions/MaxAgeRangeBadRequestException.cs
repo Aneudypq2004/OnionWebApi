@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Models.Exceptions
 {
-    public abstract class BadRequestException : Exception
+    public class MaxAgeRangeBadRequestException : BadRequestException
     {
-        protected BadRequestException(string msg) : base(msg)
+        public MaxAgeRangeBadRequestException() : base("Max Age cant be less than min Age")
         {
-            
         }
     }
 }

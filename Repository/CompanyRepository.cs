@@ -33,6 +33,9 @@ namespace Repository
           return  await FindByCondition(c => ids.Contains(c.Id), trackChanges).ToListAsync();
         }
 
-       
+        public Task<IEnumerable<Company>> GetAllCompaniesAsync(bool tranckChanges)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,20 +1,45 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.LinkModels;
+using Microsoft.AspNetCore.Mvc;
+using Service.Contracts;
+using Shared.RequestFeatures;
+using System.Text.Json;
+using WebApplicationOnion.ActionFilters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApplicationOnion.Controllers
 {
     [Route("api/companies/{CompanyId}/employees")]
-
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        // GET: api/<EmployeeController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IServiceManager _service;
+
+        public EmployeeController(IServiceManager service)
         {
-            return new string[] { "value1", "value2" };
+            this._service = service;
         }
+        [HttpGet]
+        [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
+        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
+        {
+            var linkParams = new LinkParameters(employeeParameters, HttpContext);
+
+            var result = await _service.EmployeeService.GetEmployeesAsync(companyId, linkParams, trackChanges: false);
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(result.metaData));
+
+            return result.linkResponse.HasLinks ? Ok(result.linkResponse.LinkedEntities) : Ok(result.linkResponse.ShapedEntities);
+
+        }
+
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
+        }
+
 
         // GET api/<EmployeeController>/5
         [HttpGet("{id}")]

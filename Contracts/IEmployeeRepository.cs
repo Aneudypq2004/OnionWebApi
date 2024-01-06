@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -10,10 +11,10 @@ namespace Contracts
 {
     public interface IEmployeeRepository
     {
-        Employee GetEmployee(Guid companyId, Guid id, bool empTrackChanges);
+        Task<PagedList<Employee>> GetEmployeesAsync(Guid companyId, bool trackChange, EmployeeParameters parameters);
 
-        Task<IEnumerable<Employee>> GetEmployees(Guid companyId, bool trackChanges);
-
-        Task<Employee> GetEmployeeAsync(Guid companyId, Guid id, bool trackChange);
+        Task<Employee> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges);
+        void CreateEmployeeForCompany(Guid companyId, Employee employee);
+        void DeleteEmployee(Employee employee);
     }
 }

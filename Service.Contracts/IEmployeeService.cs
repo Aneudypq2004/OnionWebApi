@@ -1,5 +1,7 @@
-﻿using Domain.Models;
+﻿using Domain.LinkModels;
+using Domain.Models;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 using System;
 
 
@@ -8,17 +10,14 @@ namespace Service.Contracts
     public interface IEmployeeService
     {
 
-        Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges);
+        Task<(LinkResponse linkResponse, MetaData metaData)> GetEmployeesAsync(Guid companyId, LinkParameters linkParameters, bool trackChanges);
 
-        EmployeeDto GetEmployee (Guid Id, bool trackChanges);
-
-        EmployeeDto CreateEmployee(EmployeeForCreationDto employee);
-        EmployeeDto UpdateEmployee(Guid Id, EmployeeDto employee);
-
-        bool DeleteEmployee(Guid Id);
+        Task<EmployeeDto> CreateEmployee(Guid companyId, EmployeeForCreationDto employeeForCreation, bool trackChanges);
+        Task UpdateEmployeeForCompanyAsync(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate, bool compTrackChanges, bool empTrackChanges);
+        Task DeleteEmployeeForCompanyAsync(Guid companyId, Guid id, bool trackChanges);
 
         (EmployeeForUpdateDto employeeToPatch, Employee employeeEntity) GetEmployeeForPatch(
            Guid companyId, Guid id, bool compTrackChanges, bool empTrackChanges);
-        void SaveChangesForPatch(EmployeeForUpdateDto employeeToPatch, Employee  employeeEntity);
+        void SaveChangesForPatch(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity);
     }
 }

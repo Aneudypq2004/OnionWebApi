@@ -19,8 +19,14 @@ namespace Domain.Models
         [Required(ErrorMessage = "Employee Age is a required field")]
         public int Age { get; set; }
 
+
         [Required(ErrorMessage = "Position  is a required field")]
 
         public Position? Position { get; set; }
+
+
+        [ForeignKey(nameof (Company))]
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 }

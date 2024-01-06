@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -7,6 +8,7 @@ using WebApplicationOnion.ActionFilters;
 
 namespace WebApplicationOnion.Controllers
 {
+    [ApiVersion("1.0")]
     [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
@@ -27,6 +29,9 @@ namespace WebApplicationOnion.Controllers
 
 
         [HttpGet("{Id:Guid}", Name = "GetCompany")]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
+
         public async Task<ActionResult> GetCompany(Guid Id)
         {
             var company = await service.CompanyService.GetCompanyAsync(Id, trackChanges: false);

@@ -22,10 +22,6 @@ namespace Repository.ContextFactory
                     .UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                    b => b.MigrationsAssembly("WebApplicationOnion"));
 
-
-
-
-
             return new RepositoryContext(builder.Options);
                 
         }

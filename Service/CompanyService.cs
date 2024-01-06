@@ -55,6 +55,11 @@ namespace Service
             await _repository.Save();
         }
 
+        public Task DeleteCompanyAsync(Guid companyId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges)
         {
             var companies = await _repository.CompanyRepository.GetAllCompaniesAsync(trackChanges);

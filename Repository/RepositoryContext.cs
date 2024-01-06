@@ -1,10 +1,11 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Repository.Configuration;
 
 namespace Repository
 {
-    public class RepositoryContext : DbContext
+    public class RepositoryContext : IdentityDbContext<User>
     {
         public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
         {
